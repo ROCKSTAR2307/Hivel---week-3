@@ -1,0 +1,19 @@
+2025-11-06T07:59:02Z [AGENT] agent=pr_agent status=started
+2025-11-06T07:59:02Z [QUERY] agent=pr_agent prompt='give me the review duration for the pr id 261'
+2025-11-06T07:59:06Z [TOOL] tool=pr.get_review_time pr_id=261
+2025-11-06T07:59:06Z [SQL] SELECT opentoreviewduration AS review_time_minutes FROM insightly.pull_request WHERE organizationid = 2133 AND actualpullrequestid = %s LIMIT 1
+2025-11-06T07:59:06Z [SQL] SELECT opentoreviewduration AS review_time_minutes FROM insightly.pull_request WHERE organizationid = 2133 AND actualpullrequestid = 261 LIMIT 1
+2025-11-06T07:59:17Z [AGENT] agent=manager_agent status=started
+2025-11-06T07:59:29Z [QUERY] agent=manager_agent prompt='give me all the pr details last 5 days'
+2025-11-06T07:59:32Z [TOOL] tool=pr.get_prs_by_period period='last 5 days' offset=0
+2025-11-06T07:59:33Z [SQL] SELECT COUNT(*) AS pr_count FROM insightly.pull_request WHERE organizationid = %s AND createdon BETWEEN %s AND %s
+2025-11-06T07:59:33Z [SQL] SELECT COUNT(*) AS pr_count FROM insightly.pull_request WHERE organizationid = 2133 AND createdon BETWEEN '2025-11-01T07:59:32.963759+00:00' AND '2025-11-06T07:59:32.963759+00:00'
+2025-11-06T07:59:33Z [SQL] SELECT actualpullrequestid, title, state, authorid, createdon, mergedon, cycletimeduration, opentoreviewduration, committoopenduration, linesadded, linesremoved, modifiedfilescount FROM insightly.pull_request WHERE organizationid = %s AND createdon BETWEEN %s AND %s ORDER BY createdon DESC LIMIT %s OFFSET %s
+2025-11-06T07:59:33Z [SQL] SELECT actualpullrequestid, title, state, authorid, createdon, mergedon, cycletimeduration, opentoreviewduration, committoopenduration, linesadded, linesremoved, modifiedfilescount FROM insightly.pull_request WHERE organizationid = 2133 AND createdon BETWEEN '2025-11-01T07:59:32.963759+00:00' AND '2025-11-06T07:59:32.963759+00:00' ORDER BY createdon DESC LIMIT 10 OFFSET 0
+2025-11-06T08:00:35Z [QUERY] agent=manager_agent prompt='give me pr count and commit count for last 5 days'
+2025-11-06T08:00:38Z [TOOL] tool=commit.get_commit_count_period period='last 5 days'
+2025-11-06T08:00:38Z [TOOL] tool=pr.get_pr_count_period period='last 5 days'
+2025-11-06T08:00:39Z [SQL] SELECT COUNT(*) AS pr_count FROM insightly.pull_request WHERE organizationid = 2133 AND createdon BETWEEN %s AND %s
+2025-11-06T08:00:39Z [SQL] SELECT COUNT(*) AS pr_count FROM insightly.pull_request WHERE organizationid = 2133 AND createdon BETWEEN '2025-11-01T08:00:38.844286+00:00' AND '2025-11-06T08:00:38.844286+00:00'
+2025-11-06T08:00:39Z [SQL] SELECT COUNT(*) AS commit_count FROM insightly.commit WHERE organizationid = %s AND date BETWEEN %s AND %s
+2025-11-06T08:00:39Z [SQL] SELECT COUNT(*) AS commit_count FROM insightly.commit WHERE organizationid = 2133 AND date BETWEEN '2025-11-01T08:00:38.839753+00:00' AND '2025-11-06T08:00:38.839753+00:00'
